@@ -21,39 +21,41 @@ namespace DatabaseAnalyzer
             {
                 conn.Open();
 
-                //var cmd1 = new SqlCommand("select * from TeamMembers", conn);
+                var cmd1 = new SqlCommand("select * from TeamMembers", conn);
                 //var cmd1 = new SqlCommand("select * from GeoGraphJournalsDistributionReportCache", conn);
 
                 //var cmd1 = new SqlCommand("SET FMTONLY ON; select * from GeoGraphJournalsDistributionReportCache; SET FMTONLY OFF", conn);
                 //var cmd1 = new SqlCommand("select * from GeoGraphJournalsDistributionReportCache", conn);
 
-                var cmd1 = new SqlCommand("exec proc_LondonCampaign_GetStatuses", conn);
+                //var cmd1 = new SqlCommand("exec proc_LondonCampaign_GetStatuses", conn);
 
 
                 SqlDataReader reader = cmd1.ExecuteReader();
+
 
                 var schemaTable = reader.GetSchemaTable();
                 string schmDtoStr = DTOStringMaker.MakeDTOSring("SchemaTableDTO", schemaTable);
                 var list_schemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable);
 
 
-                var schmCols = reader.GetSchemaTable().Columns;
-                var rows = reader.GetSchemaTable().Rows;
-                var row0 = reader.GetSchemaTable().Rows[0];
+                //var schmCols = reader.GetSchemaTable().Columns;
+                //var rows = reader.GetSchemaTable().Rows;
+                //var row0 = reader.GetSchemaTable().Rows[0];
 
+                //SqlDbType type = (SqlDbType)(int)reader.GetSchemaTable().Rows[0]["ProviderType"];
 
-                SqlDbType type = (SqlDbType)(int)reader.GetSchemaTable().Rows[0]["ProviderType"];
+                table1.Load(reader);
 
 
                 var adapt1 = new SqlDataAdapter(cmd1);
 
                 adapt1.Fill(table1);
 
-                //string dtoStr = DTOStringMaker.MakeDTOSring("TeamMemberDTO", table1);
-                string dtoStr = DTOStringMaker.MakeDTOSring("GeoGraphJournalsDistributionReportCacheDTO", table1);
+                string dtoStr = DTOStringMaker.MakeDTOSring("TeamMemberDTO", table1);
+                //string dtoStr = DTOStringMaker.MakeDTOSring("GeoGraphJournalsDistributionReportCacheDTO", table1);
 
 
-                //var list_TeamMembers = TeamMemberDTOMgr.CreateListFromDataTable(table1);
+                var list_TeamMembers = TeamMemberDTOMgr.CreateListFromDataTable(table1);
             }
 
         }

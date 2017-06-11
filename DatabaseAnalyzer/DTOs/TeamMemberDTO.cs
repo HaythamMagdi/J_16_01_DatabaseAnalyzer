@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,17 +11,17 @@ namespace BD.DomainModel.DataTransferObjects
     public class TeamMemberDTO
     {
         public int TeamMemberId { get; set; }
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public String Password { get; set; }
-        public String Email { get; set; }
-        public String Position { get; set; }
-        public String Team { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string Position { get; set; }
+        public string Team { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public Boolean Active { get; set; }
-        public Boolean IsConcurrentAccount { get; set; }
-        public DateTime OriginalEndDate { get; set; }
+        public bool Active { get; set; }
+        public bool IsConcurrentAccount { get; set; }
+        public DateTime? OriginalEndDate { get; set; }
 
     }
 }
@@ -77,17 +75,17 @@ namespace BD.DomainModel.DataTransferObjectManagers
             foreach (DataColumn col in table.Columns)
             {
                 res.TeamMemberId = (int)dr["TeamMemberId"];
-                res.FirstName = (String)dr["FirstName"];
-                res.LastName = (String)dr["LastName"];
-                res.Password = (String)dr["Password"];
-                res.Email = (String)dr["Email"];
-                res.Position = (String)dr["Position"];
-                res.Team = (String)dr["Team"];
+                res.FirstName = (string)dr["FirstName"];
+                res.LastName = (string)dr["LastName"];
+                res.Password = (string)dr["Password"];
+                res.Email = (string)dr["Email"];
+                res.Position = (string)dr["Position"];
+                res.Team = (string)dr["Team"];
                 res.StartDate = (DateTime)dr["StartDate"];
-                res.EndDate = (DateTime)dr["EndDate"];
-                res.Active = (Boolean)dr["Active"];
-                res.IsConcurrentAccount = (Boolean)dr["IsConcurrentAccount"];
-                res.OriginalEndDate = (DateTime)dr["OriginalEndDate"];
+                res.EndDate = dr["EndDate"] is DBNull ? null : (DateTime?)dr["EndDate"];
+                res.Active = (bool)dr["Active"];
+                res.IsConcurrentAccount = (bool)dr["IsConcurrentAccount"];
+                res.OriginalEndDate = dr["OriginalEndDate"] is DBNull ? null : (DateTime?)dr["OriginalEndDate"];
 
             }
 
