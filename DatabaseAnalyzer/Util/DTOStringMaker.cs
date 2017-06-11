@@ -42,6 +42,8 @@ namespace DatabaseAnalyzer.Util
 
                     AllowDBNull = col.AllowDBNull,
                 };
+                prop.TypeName += ((prop.AllowDBNull && prop.TypeName != "string" && prop.TypeName != "Type") ? "?" : "");
+
                 list_Props.Add(prop);
             }
 
@@ -150,7 +152,7 @@ namespace BD.DomainModel.DataTransferObjectManagers
                 string propDef = "";
                 foreach (DTOProperty prop in list_Props)
                 {
-                    propDef += "public " + prop.TypeName + ((prop.AllowDBNull && prop.TypeName != "string" && prop.TypeName != "Type") ? "?" : "") + " " + prop.Name + " { get; set; }" + "\r\n";
+                    propDef += "public " + prop.TypeName + " " + prop.Name + " { get; set; }" + "\r\n";
                 }
                 dtoFileStr = dtoFileStr.Replace("<^DEF_PROPS^>", propDef);
             }
@@ -159,7 +161,7 @@ namespace BD.DomainModel.DataTransferObjectManagers
                 string propFromColsStr = "";
                 foreach (DTOProperty prop in list_Props)
                 {
-                    propFromColsStr += "res." + prop.Name + " = (" + prop.TypeName + ")dr[\"" + prop.TableColName + "\"];" + "\r\n";
+                    propFromColsStr += "res." + prop.Name + " = " + (prop.AllowDBNull ? " dr[\"" + prop.TableColName + "\"] is DBNull ? null : " : "") + " (" + prop.TypeName + ")dr[\"" + prop.TableColName + "\"];" + "\r\n";
                 }
                 dtoFileStr = dtoFileStr.Replace("<^COPY_PROPS_FROM_ROW^>", propFromColsStr);
             }

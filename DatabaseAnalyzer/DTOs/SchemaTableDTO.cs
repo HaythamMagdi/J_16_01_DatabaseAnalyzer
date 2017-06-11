@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -114,37 +112,37 @@ namespace BD.DomainModel.DataTransferObjectManagers
 
             foreach (DataColumn col in table.Columns)
             {
-                res.ColumnName = (string)dr["ColumnName"];
-                res.ColumnOrdinal = (int)dr["ColumnOrdinal"];
-                res.ColumnSize = (int)dr["ColumnSize"];
-                res.NumericPrecision = (short)dr["NumericPrecision"];
-                res.NumericScale = (short)dr["NumericScale"];
-                res.IsUnique = (bool)dr["IsUnique"];
-                res.IsKey = (bool)dr["IsKey"];
-                res.BaseServerName = (string)dr["BaseServerName"];
-                res.BaseCatalogName = (string)dr["BaseCatalogName"];
-                res.BaseColumnName = (string)dr["BaseColumnName"];
-                res.BaseSchemaName = (string)dr["BaseSchemaName"];
-                res.BaseTableName = (string)dr["BaseTableName"];
-                res.DataType = (Type)dr["DataType"];
-                res.AllowDBNull = (bool)dr["AllowDBNull"];
-                res.ProviderType = (int)dr["ProviderType"];
-                res.IsAliased = (bool)dr["IsAliased"];
-                res.IsExpression = (bool)dr["IsExpression"];
-                res.IsIdentity = (bool)dr["IsIdentity"];
-                res.IsAutoIncrement = (bool)dr["IsAutoIncrement"];
-                res.IsRowVersion = (bool)dr["IsRowVersion"];
-                res.IsHidden = (bool)dr["IsHidden"];
-                res.IsLong = (bool)dr["IsLong"];
-                res.IsReadOnly = (bool)dr["IsReadOnly"];
-                res.ProviderSpecificDataType = (Type)dr["ProviderSpecificDataType"];
-                res.DataTypeName = (string)dr["DataTypeName"];
-                res.XmlSchemaCollectionDatabase = (string)dr["XmlSchemaCollectionDatabase"];
-                res.XmlSchemaCollectionOwningSchema = (string)dr["XmlSchemaCollectionOwningSchema"];
-                res.XmlSchemaCollectionName = (string)dr["XmlSchemaCollectionName"];
-                res.UdtAssemblyQualifiedName = (string)dr["UdtAssemblyQualifiedName"];
-                res.NonVersionedProviderType = (int)dr["NonVersionedProviderType"];
-                res.IsColumnSet = (bool)dr["IsColumnSet"];
+                res.ColumnName = dr["ColumnName"] is DBNull ? null : (string)dr["ColumnName"];
+                res.ColumnOrdinal = dr["ColumnOrdinal"] is DBNull ? null : (int?)dr["ColumnOrdinal"];
+                res.ColumnSize = dr["ColumnSize"] is DBNull ? null : (int?)dr["ColumnSize"];
+                res.NumericPrecision = dr["NumericPrecision"] is DBNull ? null : (short?)dr["NumericPrecision"];
+                res.NumericScale = dr["NumericScale"] is DBNull ? null : (short?)dr["NumericScale"];
+                res.IsUnique = dr["IsUnique"] is DBNull ? null : (bool?)dr["IsUnique"];
+                res.IsKey = dr["IsKey"] is DBNull ? null : (bool?)dr["IsKey"];
+                res.BaseServerName = dr["BaseServerName"] is DBNull ? null : (string)dr["BaseServerName"];
+                res.BaseCatalogName = dr["BaseCatalogName"] is DBNull ? null : (string)dr["BaseCatalogName"];
+                res.BaseColumnName = dr["BaseColumnName"] is DBNull ? null : (string)dr["BaseColumnName"];
+                res.BaseSchemaName = dr["BaseSchemaName"] is DBNull ? null : (string)dr["BaseSchemaName"];
+                res.BaseTableName = dr["BaseTableName"] is DBNull ? null : (string)dr["BaseTableName"];
+                res.DataType = dr["DataType"] is DBNull ? null : (Type)dr["DataType"];
+                res.AllowDBNull = dr["AllowDBNull"] is DBNull ? null : (bool?)dr["AllowDBNull"];
+                res.ProviderType = dr["ProviderType"] is DBNull ? null : (int?)dr["ProviderType"];
+                res.IsAliased = dr["IsAliased"] is DBNull ? null : (bool?)dr["IsAliased"];
+                res.IsExpression = dr["IsExpression"] is DBNull ? null : (bool?)dr["IsExpression"];
+                res.IsIdentity = dr["IsIdentity"] is DBNull ? null : (bool?)dr["IsIdentity"];
+                res.IsAutoIncrement = dr["IsAutoIncrement"] is DBNull ? null : (bool?)dr["IsAutoIncrement"];
+                res.IsRowVersion = dr["IsRowVersion"] is DBNull ? null : (bool?)dr["IsRowVersion"];
+                res.IsHidden = dr["IsHidden"] is DBNull ? null : (bool?)dr["IsHidden"];
+                res.IsLong = dr["IsLong"] is DBNull ? null : (bool?)dr["IsLong"];
+                res.IsReadOnly = dr["IsReadOnly"] is DBNull ? null : (bool?)dr["IsReadOnly"];
+                res.ProviderSpecificDataType = dr["ProviderSpecificDataType"] is DBNull ? null : (Type)dr["ProviderSpecificDataType"];
+                res.DataTypeName = dr["DataTypeName"] is DBNull ? null : (string)dr["DataTypeName"];
+                res.XmlSchemaCollectionDatabase = dr["XmlSchemaCollectionDatabase"] is DBNull ? null : (string)dr["XmlSchemaCollectionDatabase"];
+                res.XmlSchemaCollectionOwningSchema = dr["XmlSchemaCollectionOwningSchema"] is DBNull ? null : (string)dr["XmlSchemaCollectionOwningSchema"];
+                res.XmlSchemaCollectionName = dr["XmlSchemaCollectionName"] is DBNull ? null : (string)dr["XmlSchemaCollectionName"];
+                res.UdtAssemblyQualifiedName = dr["UdtAssemblyQualifiedName"] is DBNull ? null : (string)dr["UdtAssemblyQualifiedName"];
+                res.NonVersionedProviderType = dr["NonVersionedProviderType"] is DBNull ? null : (int?)dr["NonVersionedProviderType"];
+                res.IsColumnSet = dr["IsColumnSet"] is DBNull ? null : (bool?)dr["IsColumnSet"];
 
             }
 
