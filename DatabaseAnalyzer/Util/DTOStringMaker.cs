@@ -11,6 +11,7 @@ namespace DatabaseAnalyzer.Util
             public string TableColName { get; set; }
             public string TypeName { get; set; }
             public string SqlTypeName { get; set; }
+            public bool AllowDBNull { get; set; }
         }
 
 
@@ -27,14 +28,19 @@ namespace DatabaseAnalyzer.Util
                     TableColName = col.ColumnName,
 
                     TypeName = col.DataType.Name
-                        .Replace("Int64", "long")
-                        .Replace("Int32", "int"),
+                        .Replace("String", "string")
+                        .Replace("Boolean", "bool")
+
+                        .Replace("Int16", "short")
+                        .Replace("Int32", "int")
+                        .Replace("Int64", "long"),
 
                     SqlTypeName = col.DataType.Name.ToLower()
                         .Replace("int64", "bigint")
                         .Replace("int32", "int")
                         .Replace("string", "[nvarchar](300)"),
 
+                    AllowDBNull = col.AllowDBNull,
                 };
                 list_Props.Add(prop);
             }
@@ -144,7 +150,7 @@ namespace BD.DomainModel.DataTransferObjectManagers
                 string propDef = "";
                 foreach (DTOProperty prop in list_Props)
                 {
-                    propDef += "public " + prop.TypeName + " " + prop.Name + " { get; set; }" + "\r\n";
+                    propDef += "public " + prop.TypeName + ((prop.AllowDBNull && prop.TypeName != "string" && prop.TypeName != "Type") ? "?" : "") + " " + prop.Name + " { get; set; }" + "\r\n";
                 }
                 dtoFileStr = dtoFileStr.Replace("<^DEF_PROPS^>", propDef);
             }

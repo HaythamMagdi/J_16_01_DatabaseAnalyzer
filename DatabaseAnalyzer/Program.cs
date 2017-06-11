@@ -25,13 +25,22 @@ namespace DatabaseAnalyzer
                 //var cmd1 = new SqlCommand("select * from GeoGraphJournalsDistributionReportCache", conn);
 
                 //var cmd1 = new SqlCommand("SET FMTONLY ON; select * from GeoGraphJournalsDistributionReportCache; SET FMTONLY OFF", conn);
-                var cmd1 = new SqlCommand("select * from GeoGraphJournalsDistributionReportCache", conn);
+                //var cmd1 = new SqlCommand("select * from GeoGraphJournalsDistributionReportCache", conn);
+
+                var cmd1 = new SqlCommand("exec proc_LondonCampaign_GetStatuses", conn);
+
 
                 SqlDataReader reader = cmd1.ExecuteReader();
+
+                var schemaTable = reader.GetSchemaTable();
+                string schmDtoStr = DTOStringMaker.MakeDTOSring("SchemaTableDTO", schemaTable);
+                var list_schemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable);
+
 
                 var schmCols = reader.GetSchemaTable().Columns;
                 var rows = reader.GetSchemaTable().Rows;
                 var row0 = reader.GetSchemaTable().Rows[0];
+
 
                 SqlDbType type = (SqlDbType)(int)reader.GetSchemaTable().Rows[0]["ProviderType"];
 
