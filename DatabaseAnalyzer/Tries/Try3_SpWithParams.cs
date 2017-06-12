@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseAnalyzer
+namespace DatabaseAnalyzer.Tries
 {
-    public class Try2
+    public class Try3_SpWithParams
     {
         public static void Proceed()
         {
@@ -35,13 +35,26 @@ namespace DatabaseAnalyzer
                 //var cmd1 = new SqlCommand("exec proc_LondonCampaign_GetStatuses", conn);
 
                 //var cmd1 = new SqlCommand("select * from Products", conn);
-                var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers", conn);
+
+
+
+                var cmd1 = new SqlCommand("sp_GetProductsThenUsers2", conn);
+                {
+                    cmd1.CommandType = CommandType.StoredProcedure;
+
+                    cmd1.Parameters.Add(new SqlParameter
+                    {
+                        ParameterName = "@MinId",
+                        SqlDbType = SqlDbType.Int,
+                        Value = 2,
+                    });
+                }
 
                 var adapt1 = new SqlDataAdapter(cmd1);
 
                 //adapt1.get
 
-                                
+
 
                 SqlDataReader reader = cmd1.ExecuteReader();
 
@@ -81,6 +94,7 @@ namespace DatabaseAnalyzer
 
                 //var list_TeamMembers = TeamMemberDTOMgr.CreateListFromDataTable(table1);
                 var list_Products = ProductDTOMgr.CreateListFromDataTable(table1);
+                var list_Users = UserDTOMgr.CreateListFromDataTable(table2);
             }
 
 
