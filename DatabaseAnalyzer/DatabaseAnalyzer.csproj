@@ -43,9 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\SchemaTableDTO.cs" />
-    <Compile Include="DTOs\TeamMemberDTO.cs" />
+    <Compile Include="DTOs\TeamMemberDTO - Copy.cs" />
+    <Compile Include="DTOs\ProductDTO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Try2.cs" />
+    <Compile Include="Try1.cs" />
     <Compile Include="Util\DTOStringMaker.cs" />
   </ItemGroup>
   <ItemGroup>
