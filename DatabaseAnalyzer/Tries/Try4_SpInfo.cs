@@ -73,7 +73,7 @@ namespace DatabaseAnalyzer.Tries
                 //    });
                 //}
 
-                var adapt1 = new SqlDataAdapter(cmd1);
+                //var adapt1 = new SqlDataAdapter(cmd1);
 
                 //adapt1.get
 

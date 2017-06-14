@@ -19,6 +19,7 @@ namespace BD.DomainModel.DataTransferObjects
         public int? Scale { get; set; }
         public int Param_order { get; set; }
         public string Collation { get; set; }
+        public bool IsOutput { get; set; }
 
     }
 }
@@ -39,7 +40,8 @@ namespace BD.DomainModel.DataTransferObjects
 [Prec] int,
 [Scale] int,
 [Param_order] int,
-[Collation] [nvarchar](300)
+[Collation] [nvarchar](300),
+[IsOutput] boolean
 
     )
 
@@ -73,6 +75,7 @@ namespace BD.DomainModel.DataTransferObjectManagers
                 res.Scale = dr["Scale"] is DBNull ? null : (int?)dr["Scale"];
                 res.Param_order = (int)dr["Param_order"];
                 res.Collation = dr["Collation"] is DBNull ? null : (string)dr["Collation"];
+                res.IsOutput = (bool)dr["IsOutput"];
 
             }
 
@@ -94,6 +97,4 @@ namespace BD.DomainModel.DataTransferObjectManagers
     }
 
 }
-
-
 

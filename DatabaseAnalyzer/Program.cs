@@ -16,7 +16,9 @@ namespace DatabaseAnalyzer
     {
         static void Main(string[] args)
         {
-            Try4_SpInfo.Proceed();
+            //Try2.Proceed();
+            Try3_SpWithParams.Proceed();
+            //Try4_SpInfo.Proceed();
         }
     }
 }
