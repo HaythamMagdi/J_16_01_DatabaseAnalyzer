@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseAnalyzer.Tries
 {
-    public class Try3_SpWithParams
+    public class Try5
     {
         public static void Proceed()
         {
@@ -35,29 +35,27 @@ namespace DatabaseAnalyzer.Tries
                 //var cmd1 = new SqlCommand("exec proc_LondonCampaign_GetStatuses", conn);
 
                 //var cmd1 = new SqlCommand("select * from Products", conn);
+                var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers", conn);
 
+                var adapt1 = new SqlDataAdapter(cmd1);
 
+                //adapt1.get
 
-                var cmd1 = new SqlCommand("sp_GetProductsThenUsers2", conn);
-                {
-                    cmd1.CommandType = CommandType.StoredProcedure;
-
-                    cmd1.Parameters.Add(new SqlParameter
-                    {
-                        ParameterName = "@MinId",
-                        SqlDbType = SqlDbType.Int,
-                        Value = 2,
-                    });
-                }
-
+                                
 
                 SqlDataReader reader = cmd1.ExecuteReader();
 
 
                 var schemaTable = reader.GetSchemaTable();
-                string schmDtoStr = DTOStringMaker.MakeDTOSring("SchemaTableDTO", schemaTable);
-                var list_schemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable);
+                //string schmDtoStr = DTOStringMaker.MakeDTOSring("SchemaTableDTO", schemaTable);
+                //var list_schemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable);
 
+
+                //var schmCols = reader.GetSchemaTable().Columns;
+                //var rows = reader.GetSchemaTable().Rows;
+                //var row0 = reader.GetSchemaTable().Rows[0];
+
+                //SqlDbType type = (SqlDbType)(int)reader.GetSchemaTable().Rows[0]["ProviderType"];
 
                 table1.Load(reader);
                 dataSet1.Tables.Add(table1);
@@ -83,7 +81,6 @@ namespace DatabaseAnalyzer.Tries
 
                 //var list_TeamMembers = TeamMemberDTOMgr.CreateListFromDataTable(table1);
                 var list_Products = ProductDTOMgr.CreateListFromDataTable(table1);
-                var list_Users = UserDTOMgr.CreateListFromDataTable(table2);
             }
 
 
