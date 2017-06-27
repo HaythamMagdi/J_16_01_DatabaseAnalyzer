@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using BD.DomainModel.DataTransferObjects;
+using DatabaseAnalyzer.Util;
 
 
-namespace BD.DomainModel.DataTransferObjects
+namespace DatabaseAnalyzer.Util
 {
     public class StoredProcParamDTO
     {
@@ -54,7 +54,7 @@ namespace BD.DomainModel.DataTransferObjects
 
 
 
-namespace BD.DomainModel.DataTransferObjectManagers
+namespace DatabaseAnalyzer.Util
 {
 
     public class StoredProcParamDTOMgr

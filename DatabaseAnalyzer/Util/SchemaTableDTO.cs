@@ -6,7 +6,7 @@ using System.Data;
 using BD.DomainModel.DataTransferObjects;
 
 
-namespace BD.DomainModel.DataTransferObjects
+namespace DatabaseAnalyzer.Util
 {
     public class SchemaTableDTO
     {
@@ -98,7 +98,7 @@ namespace BD.DomainModel.DataTransferObjects
 
 
 
-namespace BD.DomainModel.DataTransferObjectManagers
+namespace DatabaseAnalyzer.Util
 {
 
     public class SchemaTableDTOMgr
