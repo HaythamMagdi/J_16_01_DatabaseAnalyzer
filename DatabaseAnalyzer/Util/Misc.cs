@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,10 @@ namespace DatabaseAnalyzer.Util
                 this.IsOutput = src.IsOutput;                
             }
             public string ClrName { get; set; }
+            public SqlDbType SqlDbType { get; set; }
+            public string camelParamName { get; set; }
+
+            
         }
 
         public static string GetSpRepoFuncString(SqlConnection conn, string spName)
@@ -33,8 +38,8 @@ namespace DatabaseAnalyzer.Util
 
             list_StoredProcParamExs.ForEach(x =>
             {
-                x.ClrName = DbHelper.GetClrTypeFromSqlType(x.Type);
-
+                x.ClrName = DbHelper.ConvertToClrType(x.Type);
+                x.SqlDbType = DbHelper.ConvertToSqlDbType(x.Type);
             });
 
             throw new NotImplementedException();

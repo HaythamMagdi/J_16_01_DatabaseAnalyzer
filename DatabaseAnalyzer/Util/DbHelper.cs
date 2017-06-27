@@ -65,7 +65,7 @@ namespace DatabaseAnalyzer.Util
             return list_StoredProcParamDTOs;
         }
 
-        public static string GetClrTypeFromSqlType(string sqlType)
+        public static string ConvertToClrType(string sqlType)
         {
             switch(sqlType.ToLower())
             {
@@ -93,59 +93,137 @@ namespace DatabaseAnalyzer.Util
                 case "datetime":
                 case "smalldatetime":
                 case "date":
-                case "Time":
-                case "DateTime2":
+                case "time":
+                case "datetime2":
                     return "DateTime";
 
-                case "Decimal":
-                case "Money":
-                case "SmallMoney":
+                case "decimal":
+                case "money":
+                case "smallmoney":
                     return "decimal";
 
-                case "Float":
+                case "float":
                     return "double";
 
-                case "Int":
+                case "int":
                     return "int";
 
-                case "Real":
+                case "real":
                     return "float";
 
-                case "UniqueIdentifier":
+                case "uniqueidentifier":
                     return "Guid";
 
-                case "SmallInt":
+                case "smallint":
                     return "short";
 
-                case "TinyInt":
+                case "tinyint":
                     return "byte";
-
-
-                //case "int":
-                //    return "int";
-
-                //case "bigint":
-                //    return "long";
-
-                //case "nvarchar":
-                //case "varchar":
-                //    return "long";
-
-                //case "bit":
-                //    return "bool";
-
-                //case "datetime":
-                //    return "DateTime";
-                    
-
-
-
 
 
                 default:
                     throw new InvalidOperationException();
             }
 
+        }
+
+        public static SqlDbType ConvertToSqlDbType(string sqlType)
+        {   
+
+            switch (sqlType.ToLower())
+            {
+                case "bigint":
+                    return SqlDbType.BigInt;
+
+                case "binary":
+                    return SqlDbType.Binary;
+
+                case "image":
+                    return SqlDbType.Image;
+
+                case "timestamp":
+                    return SqlDbType.Timestamp;
+
+                case "varbinary":
+                    return SqlDbType.VarBinary;
+
+                case "bit":
+                    return SqlDbType.Bit;
+
+                case "char":
+                    return SqlDbType.Char;
+
+                case "nchar":
+                    return SqlDbType.NChar;
+
+                case "ntext":
+                    return SqlDbType.NText;
+
+                case "nvarchar":
+                    return SqlDbType.NVarChar;
+
+                case "text":
+                    return SqlDbType.Text;
+
+                case "varchar":
+                    return SqlDbType.VarChar;
+
+                case "xml":
+                    return SqlDbType.Xml;
+
+                case "datetime":
+                    return SqlDbType.DateTime;
+
+                case "smalldatetime":
+                    return SqlDbType.SmallDateTime;
+
+                case "date":
+                    return SqlDbType.Date;
+                
+                case "time":
+                    return SqlDbType.Time;
+                
+                case "datetime2":
+                    return SqlDbType.DateTime2;
+
+                case "decimal":
+                    return SqlDbType.Decimal;
+                
+                case "money":
+                    return SqlDbType.Money;
+                
+                case "smallmoney":
+                    return SqlDbType.SmallMoney;
+
+                case "float":
+                    return SqlDbType.Float;
+
+                case "int":
+                    return SqlDbType.Int;
+
+                case "real":
+                    return SqlDbType.Real;
+
+                case "uniqueidentifier":
+                    return SqlDbType.UniqueIdentifier;
+
+                case "smallint":
+                    return SqlDbType.SmallInt;
+
+                case "tinyint":
+                    return SqlDbType.TinyInt;
+
+
+                default:
+                    throw new InvalidOperationException();
+            }
+
+        }
+
+        public static string ConvertToCamelName(string sqlType)
+        {
+
+            throw new NotImplementedException();
         }
 
 
