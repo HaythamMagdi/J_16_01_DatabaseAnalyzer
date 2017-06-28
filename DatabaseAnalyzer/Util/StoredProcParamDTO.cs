@@ -12,7 +12,7 @@ namespace DatabaseAnalyzer.Util
 {
     public class StoredProcParamDTO
     {
-        public string Parameter_name { get; set; }
+        public string ParameterName { get; set; }
         public string Type { get; set; }
         public short Length { get; set; }
         public int? Prec { get; set; }
@@ -34,7 +34,7 @@ namespace DatabaseAnalyzer.Util
     -- Create Table Script
 
     CREATE TABLE [dbo].[Tbl_StoredProcParamDTO](    
-        [Parameter_name] [nvarchar](300),
+        [ParameterName] [nvarchar](300),
 [Type] [nvarchar](300),
 [Length] int16,
 [Prec] int,
@@ -68,7 +68,7 @@ namespace DatabaseAnalyzer.Util
 
             foreach (DataColumn col in table.Columns)
             {
-                res.Parameter_name = dr["Parameter_name"] is DBNull ? null : (string)dr["Parameter_name"];
+                res.ParameterName = dr["ParameterName"] is DBNull ? null : (string)dr["ParameterName"];
                 res.Type = dr["Type"] is DBNull ? null : (string)dr["Type"];
                 res.Length = (short)dr["Length"];
                 res.Prec = dr["Prec"] is DBNull ? null : (int?)dr["Prec"];

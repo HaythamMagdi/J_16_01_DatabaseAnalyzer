@@ -41,7 +41,7 @@ namespace DatabaseAnalyzer.Tries
 
 
                     select  
-                       'Parameter_name' = name,  
+                       'ParameterName' = name,  
                        'Type'   = type_name(user_type_id),  
                        'Length'   = max_length,  
                        'Prec'   = case when type_name(system_type_id) = 'uniqueidentifier' 

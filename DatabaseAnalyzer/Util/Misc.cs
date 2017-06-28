@@ -15,7 +15,7 @@ namespace DatabaseAnalyzer.Util
             public StoredProcParamEx() { }
             public StoredProcParamEx(StoredProcParamDTO src) 
             { 
-                this.Parameter_name = src.Parameter_name;
+                this.ParameterName = src.ParameterName;
                 this.Type = src.Type;
                 this.Length = src.Length;
                 this.Prec = src.Prec;
@@ -26,7 +26,7 @@ namespace DatabaseAnalyzer.Util
             }
             public string ClrTypeName { get; set; }
             public SqlDbType SqlDbType { get; set; }
-            public string CamelParamName { get; set; }
+            public string ParamCamelName { get; set; }
 
             
         }
@@ -63,7 +63,7 @@ namespace DatabaseAnalyzer.Util
             {
                 x.ClrTypeName = DbHelper.ConvertToClrType(x.Type);
                 x.SqlDbType = DbHelper.ConvertToSqlDbType(x.Type);
-                x.CamelParamName = Misc.ConvertToCamelName(Misc.RemoveStartAt(x.Parameter_name));
+                x.ParamCamelName = Misc.ConvertToCamelName(Misc.RemoveStartAt(x.ParameterName));
             });
 
 
@@ -89,24 +89,55 @@ namespace DatabaseAnalyzer.Util
             {
                 foreach(var param in list_StoredProcParamExs)
                 {
+                    string paramTemplate = null;
                     if(param.IsOutput)
                     {
-                        string paramTemplate = @"
-
-                        ";
-
+                        paramTemplate = @"var <^ParamCamelName^>Parameter = new SqlParameter(""<^ParamName^>"", SqlDbType.<^SqlDbTypeName^>) { Direction = System.Data.ParameterDirection.Output, };";
                     }
                     else
                     {
-                        string paramTemplate = @"
-                            var <^camelName^>Parameter = new SqlParameter(""<^^>"", SqlDbType.DateTime) { Value = (object)from ?? DBNull.Value, };
-
-                        ";
-
+                        paramTemplate = @"var <^ParamCamelName^>Parameter = new SqlParameter(""<^ParamName^>"", SqlDbType.<^SqlDbTypeName^>) { Value = (object)<^ParamCamelName^> ?? DBNull.Value, };";
                     }
+
+                    string paramStr = paramTemplate;
+
+                    paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
+                    paramStr = paramStr.Replace("<^ParamName^>", param.ParameterName);
+                    paramStr = paramStr.Replace("<^SqlDbTypeName^>", param.SqlDbType.ToString());
+
+                    sqlParamDefStr += paramStr + "\r\n";
                 }
 
             }
+            funcStr = funcStr.Replace("<^SqlParamDefs^>", sqlParamDefStr);
+
+
+            string funcArgStr = "";
+            {
+                foreach (var param in list_StoredProcParamExs)
+                {
+                    string paramTemplate = null;
+                    if (param.IsOutput)
+                    {
+                        paramTemplate = @"out <^ClrTypeName^> <^ParamCamelName^>";
+                    }
+                    else
+                    {
+                        paramTemplate = @"<^ClrTypeName^> <^ParamCamelName^>";
+                    }
+
+                    string paramStr = paramTemplate;
+
+                    paramStr = paramStr.Replace("<^ClrTypeName^>", param.ClrTypeName);
+                    paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
+
+                    funcArgStr += paramStr + ", ";
+                }
+                funcArgStr = funcArgStr.TrimEnd().TrimEnd(',');
+            }
+            funcStr = funcStr.Replace("<^FuncArguments^>", funcArgStr);
+
+
 
 
             throw new NotImplementedException();
