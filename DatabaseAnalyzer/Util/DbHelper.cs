@@ -220,12 +220,6 @@ namespace DatabaseAnalyzer.Util
 
         }
 
-        public static string ConvertToCamelName(string sqlType)
-        {
-
-            throw new NotImplementedException();
-        }
-
 
     }
 }
