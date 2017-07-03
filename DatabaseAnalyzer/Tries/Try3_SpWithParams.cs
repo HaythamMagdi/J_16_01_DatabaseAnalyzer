@@ -39,15 +39,21 @@ namespace DatabaseAnalyzer.Tries
 
 
                 var cmd1 = new SqlCommand("sp_GetProductsThenUsers2", conn);
+                //var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers2 @MinId", conn);
                 {
                     cmd1.CommandType = CommandType.StoredProcedure;
 
-                    cmd1.Parameters.Add(new SqlParameter
+                    List<SqlParameter> parameters = new List<SqlParameter>();
+
+                    //cmd1.Parameters.Add(new SqlParameter
+                    parameters.Add(new SqlParameter
                     {
                         ParameterName = "@MinId",
                         SqlDbType = SqlDbType.Int,
                         Value = 2,
                     });
+
+                    cmd1.Parameters.AddRange(parameters.ToArray());
                 }
 
 

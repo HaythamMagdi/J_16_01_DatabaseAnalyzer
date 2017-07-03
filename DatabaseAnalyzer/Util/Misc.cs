@@ -57,7 +57,8 @@ namespace DatabaseAnalyzer.Util
         public static string GetSpRepoFuncString(SqlConnection conn, string spName)
         {
             //var list_StoredProcParamDTOs = DbHelper.GetSpParameterDTOs(conn, "sp_GetProductsThenUsers3");
-            var list_StoredProcParamExs = DbHelper.GetSpParameterDTOs(conn, "sp_GetProductsThenUsers3").Select(x => new StoredProcParamEx(x)).ToList();
+            //var list_StoredProcParamExs = DbHelper.GetSpParameterDTOs(conn, "sp_GetProductsThenUsers3").Select(x => new StoredProcParamEx(x)).ToList();
+            var list_StoredProcParamExs = DbHelper.GetSpParameterDTOs(conn, spName).Select(x => new StoredProcParamEx(x)).ToList();
 
             list_StoredProcParamExs.ForEach(x =>
             {
@@ -71,12 +72,21 @@ namespace DatabaseAnalyzer.Util
 
                 @"
 
-    <^ReturnType^> <^SpName^>(<^FuncArguments^>)
+    //<^ReturnType^> <^SpName^>(<^FuncArguments^>)
+    public static void <^SpName^>(<^FuncArguments^>, SqlConnection conn)
     {
 
         <^SqlParamDefs^>
+        
+                var cmd1 = new SqlCommand(""<^SpName^>"", conn);
+                {
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    cmd1.Parameters.AddRange(parameters.ToArray());
+                }
 
+            var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
 
+                //string dtoStr = DTOStringMaker.MakeDTOSring(""<^RowDTO^>"", list_TableInfos[0].Table);
 
     }
 
@@ -87,6 +97,8 @@ namespace DatabaseAnalyzer.Util
 
             string sqlParamDefStr = "";
             {
+                sqlParamDefStr += "List<SqlParameter> parameters = new List<SqlParameter>();" + "\r\n\r\n";
+
                 foreach(var param in list_StoredProcParamExs)
                 {
                     string paramTemplate = null;
@@ -99,7 +111,7 @@ namespace DatabaseAnalyzer.Util
                         paramTemplate = @"var <^ParamCamelName^>Parameter = new SqlParameter(""<^ParamName^>"", SqlDbType.<^SqlDbTypeName^>) { Value = (object)<^ParamCamelName^> ?? DBNull.Value, };";
                     }
 
-                    string paramStr = paramTemplate;
+                    string paramStr = paramTemplate + "\r\nparameters.Add(<^ParamCamelName^>Parameter);\r\n";
 
                     paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
                     paramStr = paramStr.Replace("<^ParamName^>", param.ParameterName);
@@ -139,8 +151,7 @@ namespace DatabaseAnalyzer.Util
 
 
 
-
-            throw new NotImplementedException();
+            return funcStr;
         }
 
 

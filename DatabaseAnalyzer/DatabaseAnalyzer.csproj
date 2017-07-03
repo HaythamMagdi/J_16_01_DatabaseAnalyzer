@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Misc\StoredProcFuncs.cs" />
+    <Compile Include="Tries\Try6.cs" />
     <Compile Include="Util\Misc.cs" />
     <Compile Include="Util\StoredProcParamDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
@@ -65,6 +67,7 @@
   <ItemGroup>
     <Content Include="todos.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

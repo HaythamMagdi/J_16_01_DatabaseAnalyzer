@@ -16,6 +16,7 @@ namespace DatabaseAnalyzer.Tries
         {
 
             //const string dbCncStr = "Data Source=sql2.bds.hindawi.com,32000;Initial Catalog=BDS_20170220;Persist Security Info=True;User ID=sa;Password=BDS@2020";
+            //const string dbCncStr = "Data Source=beta.dbs.hindawi.com,32000;Initial Catalog=mtsv2_20161115;Persist Security Info=True;User ID=MTSDev;Password=G@nd--e";
             const string dbCncStr = "Data Source=.;Initial Catalog=OnlineStoreDB;Integrated Security=True";
 
             var dataSet1 = new DataSet();
@@ -46,7 +47,7 @@ namespace DatabaseAnalyzer.Tries
 
                 var list_StoredProcParamDTOs = DbHelper.GetSpParameterDTOs(conn, "sp_GetProductsThenUsers3");
 
-                string spRepoFuncStr = Misc.GetSpRepoFuncString(conn, "sp_GetProductsThenUsers3");
+                string spRepoFuncStr = Util.Misc.GetSpRepoFuncString(conn, "sp_GetProductsThenUsers3");
 
 
 
