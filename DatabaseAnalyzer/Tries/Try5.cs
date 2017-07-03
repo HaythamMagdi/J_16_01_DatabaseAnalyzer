@@ -28,28 +28,29 @@ namespace DatabaseAnalyzer.Tries
 
 
 
-                //var cmd1 = new SqlCommand("select * from Products", conn);
-                //var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers", conn);
-                var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers2 2", conn);
-                //var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers3", conn);
+                ////var cmd1 = new SqlCommand("select * from Products", conn);
+                ////var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers", conn);
+                //var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers2 2", conn);
+                ////var cmd1 = new SqlCommand("exec sp_GetProductsThenUsers3", conn);
 
 
-                var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
+                //var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
 
-                string dtoStr = DTOStringMaker.MakeDTOSring("ProductDTO", list_TableInfos[0].Table);
+                //string dtoStr = DTOStringMaker.MakeDTOSring("ProductDTO", list_TableInfos[0].Table);
 
-                //dtoStr = DTOStringMaker.MakeDTOSring("UserDTO", table2);
+                ////dtoStr = DTOStringMaker.MakeDTOSring("UserDTO", table2);
 
-                //var list_TeamMembers = TeamMemberDTOMgr.CreateListFromDataTable(table1);
-                var list_Products = ProductDTOMgr.CreateListFromDataTable(list_TableInfos[0].Table);
-
-
-
-                var list_StoredProcParamDTOs = DbHelper.GetSpParameterDTOs(conn, "sp_GetProductsThenUsers3");
-
-                string spRepoFuncStr = Util.Misc.GetSpRepoFuncString(conn, "sp_GetProductsThenUsers3");
+                ////var list_TeamMembers = TeamMemberDTOMgr.CreateListFromDataTable(table1);
+                //var list_Products = ProductDTOMgr.CreateListFromDataTable(list_TableInfos[0].Table);
 
 
+
+                //var list_StoredProcParamDTOs = DbHelper.GetSpParameterDTOs(conn, "sp_GetProductsThenUsers3");
+
+                string spRepoFuncStr = Util.MiscUtil.GetSpRepoFuncString(conn, "sp_GetProductsThenUsers3");
+
+                long lv1;
+                Misc.StoredProcFuncs.sp_GetProductsThenUsers3(2, "aaa", out lv1, conn);
 
             }
 

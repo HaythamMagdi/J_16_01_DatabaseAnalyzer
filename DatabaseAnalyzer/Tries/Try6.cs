@@ -46,7 +46,7 @@ namespace DatabaseAnalyzer.Tries
 
                 //var list_StoredProcParamDTOs = DbHelper.GetSpParameterDTOs(conn, "sp_GetProductsThenUsers3");
 
-                string spRepoFuncStr = Util.Misc.GetSpRepoFuncString(conn, "proc_GetChinesePercentageForBD");
+                string spRepoFuncStr = Util.MiscUtil.GetSpRepoFuncString(conn, "proc_GetChinesePercentageForBD");
 
                 int refId;
                 //StoredProcFuncs.sp_GetProductsThenUsers3(2, "dsdfdsf", out lv1, conn);

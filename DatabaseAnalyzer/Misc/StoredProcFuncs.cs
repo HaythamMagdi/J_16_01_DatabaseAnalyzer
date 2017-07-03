@@ -14,10 +14,12 @@ namespace DatabaseAnalyzer.Misc
 
 
 
-        //<^ReturnType^> sp_GetProductsThenUsers3(int minId, string anyStr, out long someLong)
+
+
+
+
         public static void sp_GetProductsThenUsers3(int minId, string anyStr, out long someLong, SqlConnection conn)
         {
-
             List<SqlParameter> parameters = new List<SqlParameter>();
 
             var minIdParameter = new SqlParameter("@MinId", SqlDbType.Int) { Value = (object)minId ?? DBNull.Value, };
@@ -39,17 +41,24 @@ namespace DatabaseAnalyzer.Misc
 
             var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
 
+
             someLong = (long)someLongParameter.Value;
 
 
-            //string dtoStr = DTOStringMaker.MakeDTOSring("<^RowDTO^>", list_TableInfos[0].Table);
+            var list_rowDTOStrs = new List<string>();
+
+            for (int i = 0; i < list_TableInfos.Count; i++)
+            {
+                list_rowDTOStrs.Add(DTOStringMaker.MakeDTOSring("RowDTO_<^I^>".Replace("<^I^>", i.ToString()), list_TableInfos[i].Table));
+            }
 
         }
 
+                
+                
 
 
 
-        //<^ReturnType^> proc_GetChinesePercentageForBD(string isEiCInsteadEditor, string year, out int referenceId)
         public static void proc_GetChinesePercentageForBD(string isEiCInsteadEditor, string year, out int referenceId, SqlConnection conn)
         {
 
@@ -68,6 +77,7 @@ namespace DatabaseAnalyzer.Misc
 
             var cmd1 = new SqlCommand("proc_GetChinesePercentageForBD", conn);
             {
+                cmd1.CommandTimeout = 3600000;
                 cmd1.CommandType = CommandType.StoredProcedure;
                 cmd1.Parameters.AddRange(parameters.ToArray());
             }
@@ -80,7 +90,7 @@ namespace DatabaseAnalyzer.Misc
 
         }
 
-                        
+
 
 
     }
