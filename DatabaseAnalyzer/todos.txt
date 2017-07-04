@@ -2,3 +2,7 @@
 
 * fill table with a data reader
 
+* manage github stuff
+
+
+
