@@ -18,19 +18,22 @@ namespace DatabaseAnalyzer.Misc
 
 
 
+
+
         public static void sp_GetProductsThenUsers3(int minId, string anyStr, out long someLong, SqlConnection conn)
         {
+            var minIdParameter = new SqlParameter("@MinId", SqlDbType.Int) { Value = (object)minId ?? DBNull.Value, };
+            var anyStrParameter = new SqlParameter("@AnyStr", SqlDbType.NVarChar) { Value = (object)anyStr ?? DBNull.Value, };
+            var someLongParameter = new SqlParameter("@SomeLong", SqlDbType.BigInt) { Direction = System.Data.ParameterDirection.Output, };
+
+
+            //((IBDMainUnitOfWork)UnitOfWork).ExecuteCommand("EXEC sp_GetProductsThenUsers3 @MinId, @AnyStr, out @SomeLong", minIdParameter, anyStrParameter, someLongParameter);
+
             List<SqlParameter> parameters = new List<SqlParameter>();
 
-            var minIdParameter = new SqlParameter("@MinId", SqlDbType.Int) { Value = (object)minId ?? DBNull.Value, };
             parameters.Add(minIdParameter);
-
-            var anyStrParameter = new SqlParameter("@AnyStr", SqlDbType.NVarChar) { Value = (object)anyStr ?? DBNull.Value, };
             parameters.Add(anyStrParameter);
-
-            var someLongParameter = new SqlParameter("@SomeLong", SqlDbType.BigInt) { Direction = System.Data.ParameterDirection.Output, };
             parameters.Add(someLongParameter);
-
 
 
             var cmd1 = new SqlCommand("sp_GetProductsThenUsers3", conn);

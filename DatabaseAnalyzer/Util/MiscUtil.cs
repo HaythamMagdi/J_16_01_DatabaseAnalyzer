@@ -74,9 +74,12 @@ namespace DatabaseAnalyzer.Util
 
     public static void <^SpName^>(<^FuncArguments^>, SqlConnection conn)
     {
-
         <^SqlParamDefs^>
         
+            //((IBDMainUnitOfWork)UnitOfWork).ExecuteCommand(""EXEC <^SpName^> <^InlineParamNames^>"", <^InlineParamVars^>);
+
+        <^SqlParamList^>
+
                 var cmd1 = new SqlCommand(""<^SpName^>"", conn);
                 {
                     cmd1.CommandType = CommandType.StoredProcedure;
@@ -85,111 +88,14 @@ namespace DatabaseAnalyzer.Util
 
             var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
 
-        <^AssignOutParams^>
-        
+        <^AssignOutParams^>        
+
         <^RowDTOStrs^>
-
-
     }
 
                 ";
 
             string funcStr = template.Replace("<^SpName^>", spName);
-
-
-            {
-                string sqlParamDefStr = "";
-                sqlParamDefStr += "List<SqlParameter> parameters = new List<SqlParameter>();" + "\r\n\r\n";
-
-                foreach(var param in list_StoredProcParamExs)
-                {
-                    string paramTemplate = null;
-                    if(param.IsOutput)
-                    {
-                        paramTemplate = @"var <^ParamCamelName^>Parameter = new SqlParameter(""<^ParamName^>"", SqlDbType.<^SqlDbTypeName^>) { Direction = System.Data.ParameterDirection.Output, };";
-                    }
-                    else
-                    {
-                        paramTemplate = @"var <^ParamCamelName^>Parameter = new SqlParameter(""<^ParamName^>"", SqlDbType.<^SqlDbTypeName^>) { Value = (object)<^ParamCamelName^> ?? DBNull.Value, };";
-                    }
-
-                    string paramStr = paramTemplate + "\r\nparameters.Add(<^ParamCamelName^>Parameter);\r\n";
-
-                    paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
-                    paramStr = paramStr.Replace("<^ParamName^>", param.ParameterName);
-                    paramStr = paramStr.Replace("<^SqlDbTypeName^>", param.SqlDbType.ToString());
-
-                    sqlParamDefStr += paramStr + "\r\n";
-                }
-
-                funcStr = funcStr.Replace("<^SqlParamDefs^>", sqlParamDefStr);
-            }
-
-
-
-
-            {
-                string assignOutParamStr = "\r\n";
-                string paramTemplate = @"<^ParamCamelName^> = (<^ParamClrTypeName^>)<^ParamCamelName^>Parameter.Value;" + "\r\n";
-
-                foreach (var param in list_StoredProcParamExs.Where(x => x.IsOutput))
-                {
-                    string paramStr = paramTemplate + "\r\n";
-
-                    paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
-                    paramStr = paramStr.Replace("<^ParamClrTypeName^>", param.ClrTypeName);
-
-                    assignOutParamStr += paramStr + "\r\n";
-                }
-
-                funcStr = funcStr.Replace("<^AssignOutParams^>", assignOutParamStr);
-            }
-
-
-            //{
-            //    string rowDTOStrs = "\r\n";
-            //    string paramTemplate = @"//string rowDTOStr_<^I^> = DTOStringMaker.MakeDTOSring(""RowDTO_<^I^>"", list_TableInfos[<^I^>].Table);";
-
-            //    for (int i = 0; i < 5; i++ )
-            //    {
-            //        string paramStr = paramTemplate;
-
-            //        paramStr = paramStr.Replace("<^I^>", i.ToString());
-            //        rowDTOStrs += paramStr + "\r\n";
-            //    }
-
-            //    funcStr = funcStr.Replace("<^RowDTOStrs^>", rowDTOStrs);
-            //}
-
-
-            {
-                string rowDTOStrs = //"\r\n";
-                //string paramTemplate = 
-@"
-
-    var list_rowDTOStrs = new List<string>();
-
-    for(int i=0; i < list_TableInfos.Count; i++)
-    {
-        list_rowDTOStrs.Add(DTOStringMaker.MakeDTOSring(""RowDTO_<^I^>"".Replace(""<^I^>"", i.ToString()), list_TableInfos[i].Table));
-    }
-
-";
-
-                //for (int i = 0; i < 5; i++)
-                //{
-                //    string paramStr = paramTemplate;
-
-                //    paramStr = paramStr.Replace("<^I^>", i.ToString());
-                //    rowDTOStrs += paramStr + "\r\n";
-                //}
-
-                funcStr = funcStr.Replace("<^RowDTOStrs^>", rowDTOStrs);
-            }
-
-        
-
-
 
             {
                 string funcArgStr = "";
@@ -220,7 +126,116 @@ namespace DatabaseAnalyzer.Util
                 funcStr = funcStr.Replace("<^FuncArguments^>", funcArgStr);
             }
 
+            {
+                string sqlParamDefStr = "";
 
+                foreach(var param in list_StoredProcParamExs)
+                {
+                    string paramTemplate = null;
+                    if(param.IsOutput)
+                    {
+                        paramTemplate = @"var <^ParamCamelName^>Parameter = new SqlParameter(""<^ParamName^>"", SqlDbType.<^SqlDbTypeName^>) { Direction = System.Data.ParameterDirection.Output, };";
+                    }
+                    else
+                    {
+                        paramTemplate = @"var <^ParamCamelName^>Parameter = new SqlParameter(""<^ParamName^>"", SqlDbType.<^SqlDbTypeName^>) { Value = (object)<^ParamCamelName^> ?? DBNull.Value, };";
+                    }
+
+                    string paramStr = paramTemplate;
+
+                    paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
+                    paramStr = paramStr.Replace("<^ParamName^>", param.ParameterName);
+                    paramStr = paramStr.Replace("<^SqlDbTypeName^>", param.SqlDbType.ToString());
+
+                    sqlParamDefStr += paramStr + "\r\n";
+                }
+
+                funcStr = funcStr.Replace("<^SqlParamDefs^>", sqlParamDefStr);
+            }
+
+            {
+                string inlineParamNameStr = "";
+                string paramTemplate = @"<^ParameterName^>";
+
+                bool isFirst = true;
+                foreach (var param in list_StoredProcParamExs)
+                {
+                    string paramStr = (isFirst ? "" : ", ") + (param.IsOutput ? "out " : "") + paramTemplate;
+
+                    paramStr = paramStr.Replace("<^ParameterName^>", param.ParameterName);
+
+                    inlineParamNameStr += paramStr;
+
+                    isFirst = false;
+                }
+
+                funcStr = funcStr.Replace("<^InlineParamNames^>", inlineParamNameStr);
+            }
+
+            {
+                string inlineParamVarStr = "";
+                string paramTemplate = @"<^ParamCamelName^>Parameter";
+
+                bool isFirst = true;
+                foreach (var param in list_StoredProcParamExs)
+                {
+                    string paramStr = (isFirst ? "" : ", ") + paramTemplate;
+
+                    paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
+
+                    inlineParamVarStr += paramStr;
+
+                    isFirst = false;
+                }
+
+                funcStr = funcStr.Replace("<^InlineParamVars^>", inlineParamVarStr);
+            }
+
+            {
+                string sqlParamListStr = "";
+                sqlParamListStr += "List<SqlParameter> parameters = new List<SqlParameter>();" + "\r\n\r\n";
+
+                foreach (var param in list_StoredProcParamExs)
+                {
+                    string paramStr = "parameters.Add(<^ParamCamelName^>Parameter);";
+
+                    paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
+
+                    sqlParamListStr += paramStr + "\r\n";
+                }
+
+                funcStr = funcStr.Replace("<^SqlParamList^>", sqlParamListStr);
+            }
+
+            {
+                string assignOutParamStr = "";
+                string paramTemplate = @"<^ParamCamelName^> = (<^ParamClrTypeName^>)<^ParamCamelName^>Parameter.Value;";
+
+                foreach (var param in list_StoredProcParamExs.Where(x => x.IsOutput))
+                {
+                    string paramStr = paramTemplate;
+
+                    paramStr = paramStr.Replace("<^ParamCamelName^>", param.ParamCamelName);
+                    paramStr = paramStr.Replace("<^ParamClrTypeName^>", param.ClrTypeName);
+
+                    assignOutParamStr += paramStr + "\r\n";
+                }
+
+                funcStr = funcStr.Replace("<^AssignOutParams^>", assignOutParamStr);
+            }
+
+            {
+                string rowDTOStrs = 
+@"
+    var list_rowDTOStrs = new List<string>();
+
+    for(int i=0; i < list_TableInfos.Count; i++)
+    {
+        list_rowDTOStrs.Add(DTOStringMaker.MakeDTOSring(""RowDTO_<^I^>"".Replace(""<^I^>"", i.ToString()), list_TableInfos[i].Table));
+    }
+";
+                funcStr = funcStr.Replace("<^RowDTOStrs^>", rowDTOStrs);
+            }
 
             return funcStr;
         }
