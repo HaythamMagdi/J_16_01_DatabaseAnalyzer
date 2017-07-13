@@ -82,6 +82,7 @@ namespace DatabaseAnalyzer.Util
 
                 var cmd1 = new SqlCommand(""<^SpName^>"", conn);
                 {
+                    cmd1.CommandTimeout = 3600000;
                     cmd1.CommandType = CommandType.StoredProcedure;
                     cmd1.Parameters.AddRange(parameters.ToArray());
                 }
