@@ -136,7 +136,32 @@ namespace DatabaseAnalyzer.Misc
 
         }
 
-                
+
+
+        public static void proc_GetGeoGraphJournalsDistributionReportCache(SqlConnection conn)
+        {
+            //((IBDMainUnitOfWork)UnitOfWork).ExecuteCommand("EXEC proc_GetGeoGraphJournalsDistributionReportCache ", );
+
+            List<SqlParameter> parameters = new List<SqlParameter>();
+
+            var cmd1 = new SqlCommand("proc_GetGeoGraphJournalsDistributionReportCache", conn);
+            {
+                cmd1.CommandTimeout = 3600000;
+                cmd1.CommandType = CommandType.StoredProcedure;
+                cmd1.Parameters.AddRange(parameters.ToArray());
+            }
+
+            var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
+        
+            var list_rowDTOStrs = new List<string>();
+
+            for(int i=0; i < list_TableInfos.Count; i++)
+            {
+                list_rowDTOStrs.Add(DTOStringMaker.MakeDTOSring("RowDTO_<^I^>".Replace("<^I^>", i.ToString()), list_TableInfos[i].Table));
+            }
+        }
+
+                                
 
     }
 }

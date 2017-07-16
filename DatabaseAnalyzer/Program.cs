@@ -20,7 +20,8 @@ namespace DatabaseAnalyzer
             //Try3_SpWithParams.Proceed();
             //Try4_SpInfo.Proceed();
             //Try5.Proceed();
-            Try6.Proceed();
+            //Try6.Proceed();
+            Try7.Proceed();
         }
     }
 }

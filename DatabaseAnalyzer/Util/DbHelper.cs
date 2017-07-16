@@ -60,8 +60,12 @@ namespace DatabaseAnalyzer.Util
 
             var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
 
-            var list_StoredProcParamDTOs = StoredProcParamDTOMgr.CreateListFromDataTable(list_TableInfos[0].Table);
+            List<StoredProcParamDTO> list_StoredProcParamDTOs = new List<StoredProcParamDTO>();
 
+            if (list_TableInfos.Any())
+            {
+                list_StoredProcParamDTOs = StoredProcParamDTOMgr.CreateListFromDataTable(list_TableInfos[0].Table);
+            }
             return list_StoredProcParamDTOs;
         }
 
