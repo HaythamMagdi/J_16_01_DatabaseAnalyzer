@@ -3,7 +3,7 @@ using System.Data;
 
 namespace DatabaseAnalyzer.Util
 {
-    public class DTOStringMaker
+    public class SqlTableStringMaker
     {
         class DTOProperty
         {
@@ -15,7 +15,7 @@ namespace DatabaseAnalyzer.Util
         }
 
 
-        public static string MakeDTOSring(string dtoClassName, DataTable table)
+        public static string MakeSring(string tableName, DataTable table)
         {
             List<DTOProperty> list_Props = new List<DTOProperty>();
 
@@ -126,7 +126,7 @@ namespace BD.DomainModel.DataTransferObjectManagers
 }
 
                 ";
-            string dtoFileStr = dtoFileTemplate.Replace("<^DTOClassName^>", dtoClassName);
+            string dtoFileStr = dtoFileTemplate.Replace("<^DTOClassName^>", tableName);
 
             {
                 string tableColDef = "";
