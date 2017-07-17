@@ -17,14 +17,36 @@ namespace DatabaseAnalyzer.Util
             {
                 var list_TableInfos = new List<TableInfo>();
 
+                if (!reader.IsClosed && !reader.HasRows)
+                //if(!reader.IsClosed)
+                {
+                    var schemaTable = reader.GetSchemaTable();
+                    if (schemaTable != null)
+                    {
+                        var tableInfo = new TableInfo
+                        {
+                            List_SchemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable),
+                            Table = new DataTable(),
+                        };
+
+                        tableInfo.Table.Load(reader);
+                        list_TableInfos.Add(tableInfo);
+                    }
+                }
+
                 while (!reader.IsClosed && reader.HasRows)
+                //while (!reader.IsClosed)
                 {
                     var tableInfo = new TableInfo
                     {
                         List_SchemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(reader.GetSchemaTable()),
                         Table = new DataTable(),
                     };
-                    tableInfo.Table.Load(reader);
+
+                    //if (reader.HasRows)
+                    {
+                        tableInfo.Table.Load(reader);
+                    }
 
                     list_TableInfos.Add(tableInfo);
                 }
