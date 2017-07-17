@@ -13,25 +13,26 @@ namespace DatabaseAnalyzer.Util
     {
         public static List<TableInfo> ExecuteCommand(SqlCommand cmd)
         {
-            SqlDataReader reader = cmd.ExecuteReader();
-            
-            var list_TableInfos = new List<TableInfo>();
-
-            while (!reader.IsClosed && reader.HasRows)
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                var tableInfo = new TableInfo
+                var list_TableInfos = new List<TableInfo>();
+
+                while (!reader.IsClosed && reader.HasRows)
                 {
-                    List_SchemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(reader.GetSchemaTable()),
-                    Table = new DataTable(),
-                };
-                tableInfo.Table.Load(reader);
+                    var tableInfo = new TableInfo
+                    {
+                        List_SchemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(reader.GetSchemaTable()),
+                        Table = new DataTable(),
+                    };
+                    tableInfo.Table.Load(reader);
 
-                list_TableInfos.Add(tableInfo);
+                    list_TableInfos.Add(tableInfo);
+                }
+
+                //reader.Close();
+
+                return list_TableInfos;
             }
-
-            reader.Close();
-
-            return list_TableInfos;
         }
 
         public static List<StoredProcParamDTO> GetSpParameterDTOs(SqlConnection conn, string spName)

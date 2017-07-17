@@ -148,7 +148,7 @@ namespace DatabaseAnalyzer.Misc
             {
                 cmd1.CommandTimeout = 3600000;
                 cmd1.CommandType = CommandType.StoredProcedure;
-                //cmd1.Parameters.AddRange(parameters.ToArray());
+                cmd1.Parameters.AddRange(parameters.ToArray());
             }
 
             var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
