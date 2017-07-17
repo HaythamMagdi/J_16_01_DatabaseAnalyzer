@@ -18,7 +18,6 @@ namespace DatabaseAnalyzer.Util
                 var list_TableInfos = new List<TableInfo>();
 
                 if (!reader.IsClosed && !reader.HasRows)
-                //if(!reader.IsClosed)
                 {
                     var schemaTable = reader.GetSchemaTable();
                     if (schemaTable != null)
@@ -28,30 +27,23 @@ namespace DatabaseAnalyzer.Util
                             List_SchemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable),
                             Table = new DataTable(),
                         };
-
                         tableInfo.Table.Load(reader);
+
                         list_TableInfos.Add(tableInfo);
                     }
                 }
 
                 while (!reader.IsClosed && reader.HasRows)
-                //while (!reader.IsClosed)
                 {
                     var tableInfo = new TableInfo
                     {
                         List_SchemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(reader.GetSchemaTable()),
                         Table = new DataTable(),
                     };
-
-                    //if (reader.HasRows)
-                    {
-                        tableInfo.Table.Load(reader);
-                    }
+                    tableInfo.Table.Load(reader);
 
                     list_TableInfos.Add(tableInfo);
                 }
-
-                //reader.Close();
 
                 return list_TableInfos;
             }
@@ -80,7 +72,7 @@ namespace DatabaseAnalyzer.Util
                       from sys.parameters where object_id = object_id('<^PROC_NAME^>')
                 ";
             cmdText = cmdText.Replace("<^PROC_NAME^>", spName);
-            
+
             var cmd1 = new SqlCommand(cmdText, conn);
 
             var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
@@ -96,7 +88,7 @@ namespace DatabaseAnalyzer.Util
 
         public static string ConvertToClrType(string sqlType)
         {
-            switch(sqlType.ToLower())
+            switch (sqlType.ToLower())
             {
                 case "bigint":
                     return "long";
@@ -157,7 +149,7 @@ namespace DatabaseAnalyzer.Util
         }
 
         public static SqlDbType ConvertToSqlDbType(string sqlType)
-        {   
+        {
 
             switch (sqlType.ToLower())
             {
@@ -208,19 +200,19 @@ namespace DatabaseAnalyzer.Util
 
                 case "date":
                     return SqlDbType.Date;
-                
+
                 case "time":
                     return SqlDbType.Time;
-                
+
                 case "datetime2":
                     return SqlDbType.DateTime2;
 
                 case "decimal":
                     return SqlDbType.Decimal;
-                
+
                 case "money":
                     return SqlDbType.Money;
-                
+
                 case "smallmoney":
                     return SqlDbType.SmallMoney;
 
