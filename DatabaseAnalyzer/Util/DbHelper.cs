@@ -24,7 +24,7 @@ namespace DatabaseAnalyzer.Util
                     {
                         var tableInfo = new TableInfo
                         {
-                            List_SchemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable),
+                            List_SchemaTableColDTOs = SchemaTableColDTOMgr.CreateListFromDataTable(schemaTable),
                             Table = new DataTable(),
                         };
                         tableInfo.Table.Load(reader);
@@ -37,7 +37,7 @@ namespace DatabaseAnalyzer.Util
                 {
                     var tableInfo = new TableInfo
                     {
-                        List_SchemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(reader.GetSchemaTable()),
+                        List_SchemaTableColDTOs = SchemaTableColDTOMgr.CreateListFromDataTable(reader.GetSchemaTable()),
                         Table = new DataTable(),
                     };
                     tableInfo.Table.Load(reader);

@@ -50,7 +50,7 @@
     <Compile Include="Util\StoredProcParamDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Util\DbHelper.cs" />
-    <Compile Include="Util\SchemaTableDTO.cs" />
+    <Compile Include="Util\SchemaTableColDTO.cs" />
     <Compile Include="DTOs\TeamMemberDTO - Copy.cs" />
     <Compile Include="DTOs\ProductDTO.cs" />
     <Compile Include="Program.cs" />

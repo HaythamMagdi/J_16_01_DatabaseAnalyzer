@@ -41,8 +41,8 @@ namespace DatabaseAnalyzer.Tries
 
 
                 var schemaTable = reader.GetSchemaTable();
-                string schmDtoStr = DTOStringMaker.MakeDTOSring("SchemaTableDTO", schemaTable);
-                var list_schemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable);
+                string schmDtoStr = DTOStringMaker.MakeDTOSring("SchemaTableColDTO", schemaTable);
+                var list_schemaTableDTOs = SchemaTableColDTOMgr.CreateListFromDataTable(schemaTable);
 
 
                 //var schmCols = reader.GetSchemaTable().Columns;

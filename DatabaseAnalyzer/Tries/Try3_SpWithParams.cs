@@ -61,16 +61,16 @@ namespace DatabaseAnalyzer.Tries
 
 
                 var schemaTable = reader.GetSchemaTable();
-                string schmDtoStr = DTOStringMaker.MakeDTOSring("SchemaTableDTO", schemaTable);
-                var list_schemaTableDTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable);
+                string schmDtoStr = DTOStringMaker.MakeDTOSring("SchemaTableColDTO", schemaTable);
+                var list_schemaTableDTOs = SchemaTableColDTOMgr.CreateListFromDataTable(schemaTable);
 
 
                 table1.Load(reader);
                 dataSet1.Tables.Add(table1);
 
                 var schemaTable2 = reader.GetSchemaTable();
-                //string schm2DtoStr = DTOStringMaker.MakeDTOSring("SchemaTableDTO", schemaTable2);
-                var list_schemaTable2DTOs = SchemaTableDTOMgr.CreateListFromDataTable(schemaTable2);
+                //string schm2DtoStr = DTOStringMaker.MakeDTOSring("SchemaTableColDTO", schemaTable2);
+                var list_schemaTable2DTOs = SchemaTableColDTOMgr.CreateListFromDataTable(schemaTable2);
 
                 table2.Load(reader);
                 //table2.Load(reader);

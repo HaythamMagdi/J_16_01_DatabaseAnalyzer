@@ -15,7 +15,8 @@ namespace DatabaseAnalyzer.Util
         }
 
 
-        public static string MakeSring(string tableName, DataTable table)
+        //public static string MakeSring(string tableName, DataTable table)
+        public static string MakeSring(string tableName, List<SchemaTableColDTO> list_SchemaTableColDTOs)
         {
             List<DTOProperty> list_Props = new List<DTOProperty>();
 

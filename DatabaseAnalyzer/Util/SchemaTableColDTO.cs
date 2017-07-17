@@ -8,7 +8,7 @@ using BD.DomainModel.DataTransferObjects;
 
 namespace DatabaseAnalyzer.Util
 {
-    public class SchemaTableDTO
+    public class SchemaTableColDTO
     {
         public string ColumnName { get; set; }
         public int? ColumnOrdinal { get; set; }
@@ -54,7 +54,7 @@ namespace DatabaseAnalyzer.Util
 /*
     -- Create Table Script
 
-    CREATE TABLE [dbo].[Tbl_SchemaTableDTO](    
+    CREATE TABLE [dbo].[Tbl_SchemaTableColDTO](    
         [ColumnName] [nvarchar](300),
 [ColumnOrdinal] int,
 [ColumnSize] int,
@@ -101,12 +101,12 @@ namespace DatabaseAnalyzer.Util
 namespace DatabaseAnalyzer.Util
 {
 
-    public class SchemaTableDTOMgr
+    public class SchemaTableColDTOMgr
     {
 
-        public static SchemaTableDTO FromDataRow(DataRow dr)
+        public static SchemaTableColDTO FromDataRow(DataRow dr)
         {
-            SchemaTableDTO res = new SchemaTableDTO();
+            SchemaTableColDTO res = new SchemaTableColDTO();
 
             DataTable table = dr.Table;
 
@@ -149,13 +149,13 @@ namespace DatabaseAnalyzer.Util
             return res;
         }
 
-        public static List<SchemaTableDTO> CreateListFromDataTable(DataTable table)
+        public static List<SchemaTableColDTO> CreateListFromDataTable(DataTable table)
         {
-            List<SchemaTableDTO> list_DTOs = new List<SchemaTableDTO>();
+            List<SchemaTableColDTO> list_DTOs = new List<SchemaTableColDTO>();
 
             foreach (DataRow dr in table.Rows)
             {
-                list_DTOs.Add(SchemaTableDTOMgr.FromDataRow(dr));
+                list_DTOs.Add(SchemaTableColDTOMgr.FromDataRow(dr));
             }
 
             return list_DTOs;
