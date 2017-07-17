@@ -29,6 +29,8 @@ namespace DatabaseAnalyzer.Util
                 list_TableInfos.Add(tableInfo);
             }
 
+            reader.Close();
+
             return list_TableInfos;
         }
 
