@@ -154,10 +154,12 @@ namespace DatabaseAnalyzer.Misc
             var list_TableInfos = DbHelper.ExecuteCommand(cmd1);
         
             var list_rowDTOStrs = new List<string>();
+            var list_SqlTableString = new List<string>();
 
             for(int i=0; i < list_TableInfos.Count; i++)
             {
                 list_rowDTOStrs.Add(DTOStringMaker.MakeDTOSring("RowDTO_<^I^>".Replace("<^I^>", i.ToString()), list_TableInfos[i].Table));
+                list_SqlTableString.Add(SqlTableStringMaker.MakeSring(("Table_" + "proc123" + "_<^I^>").Replace("<^I^>", i.ToString()), list_TableInfos[i].List_SchemaTableColDTOs));
             }
         }
 
